@@ -20,18 +20,17 @@ function makeToDoItem(){
     toDoItem.appendChild(checkButton);
     toDoItem.appendChild(trashButton);
     toDoList.appendChild(toDoItem);
-
-    checkButton.addEventListener("click", function(){
-        let check = false;
-        checked(check);
-    });
-
-    trashButton.addEventListener("click", function(){
-        deleteItem(toDoItem);
-    });
 }
 
+let checkButton = document.getElementById("checkButton");
 
+checkButton.addEventListener("click", function(){
+    checked();
+});
+
+trashButton.addEventListener("click", function(){
+    deleteItem(toDoItem);
+});
 
 function makeElement(tagName, idName, className){
     let newElm = document.createElement(tagName);
@@ -40,15 +39,11 @@ function makeElement(tagName, idName, className){
     return newElm;   
 }
 
-
-
-function checked(check){
-    if(check === false){
+function checked(){
+    if(checkButton.style.backgroundColor === "limegreen"){
         checkButton.style.backgroundColor = "green";
-        check = true;
-    }else if(check === true){
+    }else if(checkButton.style.backgroundColor === "green"){
         checkButton.style.backgroundColor = "limegreen";
-        check = false;
     }
 }   
 
