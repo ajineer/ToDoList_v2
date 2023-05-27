@@ -1,52 +1,51 @@
 const addBtn = document.getElementById("addToDo");
 const toDoList = document.getElementById("ToDoList");
+let userText = document.getElementById("toDoText");
 addBtn.addEventListener("click", makeToDoItem);
 
 function makeToDoItem(){
 
-    let toDoItem = makeElement("li", "toDoItem", "");
-    let trashButton = makeElement("button", "trashButton", "");
-    let checkButton = makeElement("button", "checkButton", "");
-    let checkIcon = makeElement("i", "checkSymbol", "");
+    if(userText !== ""){
+        let toDoItem = makeElement("li", "toDoItem", "");
+        let trashButton = makeElement("button", "trashButton", "");
+        let checkButton = makeElement("button", "checkButton", "");
+        let checkIcon = makeElement("i", "checkSymbol", "");
+        let checked = false;
 
-    checkIcon.appendChild(document.createTextNode("\u2713"));
-    trashButton.appendChild(document.createTextNode("\u00D7"));
-    checkButton.appendChild(checkIcon);
+        checkIcon.appendChild(document.createTextNode("\u2713"));
+        trashButton.appendChild(document.createTextNode("\u00D7"));
+        checkButton.appendChild(checkIcon);
 
-    toDoItem.innerText = document.getElementById("toDoText").value;
-    checkButton.setAttribute("type", "button");
-    trashButton.setAttribute("type", "button")
+        toDoItem.innerText = document.getElementById("toDoText").value;
+        checkButton.setAttribute("type", "button");
+        checkButton.addEventListener("click", ()=>{
+            if(checked === false){
+                checkButton.style.backgroundColor = "green";
+                checked = true;
+            }else{
+                checkButton.style.backgroundColor = "limegreen";
+                checked = false;
+            }
+        })
+        trashButton.setAttribute("type", "button")
+        trashButton.addEventListener("click",()=>{
+            toDoItem.remove();
+        })
+    }else{
+        alert("Please enter something!")
+    }
+
 
     toDoItem.appendChild(checkButton);
     toDoItem.appendChild(trashButton);
     toDoList.appendChild(toDoItem);
+    userText.value = "";
+
 }
-
-let checkButton = document.getElementById("checkButton");
-
-checkButton.addEventListener("click", function(){
-    checked();
-});
-
-trashButton.addEventListener("click", function(){
-    deleteItem(toDoItem);
-});
 
 function makeElement(tagName, idName, className){
     let newElm = document.createElement(tagName);
     newElm.setAttribute("id", idName);
     newElm.setAttribute("class", className);
     return newElm;   
-}
-
-function checked(){
-    if(checkButton.style.backgroundColor === "limegreen"){
-        checkButton.style.backgroundColor = "green";
-    }else if(checkButton.style.backgroundColor === "green"){
-        checkButton.style.backgroundColor = "limegreen";
-    }
 }   
-
-function deleteItem(todoItem){
-    todoItem.remove();
-}
